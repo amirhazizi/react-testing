@@ -3,7 +3,7 @@
 import React from "react"
 import type { RootState } from "./store"
 import { useSelector, useDispatch } from "react-redux"
-import { add, remove } from "./todoSlicer"
+import { add, remove, startEdit, endEdit, reset } from "./todoSlicer"
 
 import { AiFillDelete } from "react-icons/ai"
 import { FiEdit } from "react-icons/fi"
@@ -16,19 +16,23 @@ import {
   SingleTodoRemoveBtn,
   SingleTodoEditBtn,
   TodosContainer,
+  ResetTodosBtn,
 } from "./styledComponents"
 
 export default function App() {
   const todos = useSelector((state: RootState) => state.todos.todos)
+  const isEdit = useSelector((state: RootState) => state.todos.isEdit)
   const dispatch = useDispatch()
   const [value, setValue] = React.useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (value.length > 0) {
+    if (value.length > 0 && !isEdit) {
       dispatch(add(value))
-      setValue("")
+    } else if (value.length > 0 && isEdit) {
+      dispatch(endEdit(value))
     }
+    setValue("")
   }
 
   return (
@@ -53,15 +57,25 @@ export default function App() {
                 <h1>{content}</h1>
                 <div>
                   <SingleTodoRemoveBtn onClick={() => dispatch(remove(id))}>
-                    <AiFillDelete />
+                    <AiFillDelete fill='white' />
                   </SingleTodoRemoveBtn>
-                  <SingleTodoEditBtn>
-                    <FiEdit />
+                  <SingleTodoEditBtn
+                    onClick={() => {
+                      dispatch(startEdit({ id, content }))
+                      setValue(content)
+                    }}
+                  >
+                    <FiEdit fill='white' />
                   </SingleTodoEditBtn>
                 </div>
               </SingleTodo>
             )
           })}
+          {todos.length > 0 && (
+            <ResetTodosBtn onClick={() => dispatch(reset())}>
+              Remove All
+            </ResetTodosBtn>
+          )}
         </TodosContainer>
       </Container>
     </main>

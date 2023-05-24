@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
 
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-  *,::before,::after{
+*,::before,::after{
     margin:0;
     padding:0;
     box-sizing:content-box
@@ -96,4 +96,16 @@ export const TodosContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem 0;
+`
+export const ResetTodosBtn = styled.button`
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 250ms;
+  width: fit-content;
+  background-color: red;
+  color: white;
+  margin: 0 auto;
+  margin-top: 2rem;
 `
