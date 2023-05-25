@@ -2,7 +2,7 @@ import React from "react"
 import type { RootState } from "./store"
 import { useSelector, useDispatch } from "react-redux"
 import { add, remove, startEdit, endEdit, reset } from "./todoSlicer"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
+// import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import { AiFillDelete } from "react-icons/ai"
 import { FiEdit } from "react-icons/fi"
@@ -23,7 +23,7 @@ export default function App() {
   const isEdit = useSelector((state: RootState) => state.todos.isEdit)
   const dispatch = useDispatch()
   const [value, setValue] = React.useState("")
-  const [parent] = useAutoAnimate()
+  // const [parent] = useAutoAnimate()
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (value.length > 0 && !isEdit) {
@@ -43,22 +43,31 @@ export default function App() {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             type='text'
-            name=''
-            id=''
+            data-testid='input'
           />
-          <button type='submit'>Submit</button>
+          <button
+            style={{ opacity: value.length > 0 ? 1 : 0.2 }}
+            disabled={value.length > 0 ? false : true}
+            type='submit'
+          >
+            Submit
+          </button>
         </From>
-        <TodosContainer ref={parent}>
+        <TodosContainer>
           {todos.map((todo) => {
             const { content, id } = todo
             return (
-              <SingleTodo key={id}>
-                <h1>{content}</h1>
+              <SingleTodo key={id} id={`${id}`}>
+                <h1 data-testid='header'>{content}</h1>
                 <div>
-                  <SingleTodoRemoveBtn onClick={() => dispatch(remove(id))}>
+                  <SingleTodoRemoveBtn
+                    data-testid='delete'
+                    onClick={() => dispatch(remove(id))}
+                  >
                     <AiFillDelete fill='white' />
                   </SingleTodoRemoveBtn>
                   <SingleTodoEditBtn
+                    data-testid='edit'
                     onClick={() => {
                       dispatch(startEdit({ id, content }))
                       setValue(content)

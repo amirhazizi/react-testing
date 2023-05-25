@@ -3,11 +3,10 @@ import { store } from "./store"
 import App from "./App"
 import { Provider } from "react-redux"
 import Link from "next/link"
-import styles from "./index.module.css"
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Simple React App</title>
         <Link rel='icon' href='/favicon.ico' />
@@ -22,6 +21,6 @@ export default function Home() {
       <Provider store={store}>
         <App />
       </Provider>
-    </div>
+    </>
   )
 }
