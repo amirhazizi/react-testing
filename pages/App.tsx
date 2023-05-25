@@ -1,9 +1,8 @@
-"use client"
-
 import React from "react"
 import type { RootState } from "./store"
 import { useSelector, useDispatch } from "react-redux"
 import { add, remove, startEdit, endEdit, reset } from "./todoSlicer"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import { AiFillDelete } from "react-icons/ai"
 import { FiEdit } from "react-icons/fi"
@@ -24,7 +23,7 @@ export default function App() {
   const isEdit = useSelector((state: RootState) => state.todos.isEdit)
   const dispatch = useDispatch()
   const [value, setValue] = React.useState("")
-
+  const [parent] = useAutoAnimate()
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (value.length > 0 && !isEdit) {
@@ -49,7 +48,7 @@ export default function App() {
           />
           <button type='submit'>Submit</button>
         </From>
-        <TodosContainer>
+        <TodosContainer ref={parent}>
           {todos.map((todo) => {
             const { content, id } = todo
             return (

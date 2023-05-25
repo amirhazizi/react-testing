@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
 
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 
 *,::before,::after{
     margin:0;
@@ -15,12 +15,11 @@ body{
 }
 main{
   display:grid;
-  min-height:100vh;
-  place-items:center;
+  place-items:start;
 }
 main>div{
-  width:min(90vw,1000px);
-
+  width:min(85vw,450px);
+  
 }`
 
 export const From = styled.form`
@@ -88,6 +87,7 @@ export const SingleTodoEditBtn = styled.button`
   }
 `
 export const Container = styled.div`
+  padding-top: 4rem;
   margin: 0 auto;
   display: grid;
   gap: 5rem;
